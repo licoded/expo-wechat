@@ -9,4 +9,5 @@ module.exports = {
   loadSuccess: 2,
   loadError: 3,
   userId: "U2025040597576428365",
+  sendToUserId: "U2025040497546428365",
 };
