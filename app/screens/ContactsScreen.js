@@ -10,7 +10,7 @@ import {
   TouchableHighlight,
   View,
 } from "react-native";
-import axios from "axios";
+import { post } from "../utils/AxiosUtil";
 
 const { width } = Dimensions.get("window");
 
@@ -37,22 +37,9 @@ export default class ContactsScreen extends Component {
 
   UNSAFE_componentWillMount() {
     const params = { owner_id: Global.userId };
-    axios
-      .post("https://licoded.site:9301/api/contact/getUserList", params)
-      .then((rawResp) => {
-        return rawResp.data;
-      })
-      .then((resp) => {
-        if (resp.code != 200) {
-          throw "get resp, but with ERROR";
-        }
-        const { data } = resp;
-        return data;
-      })
-      .then((contactData) => {
-        console.log(contactData);
-        this.setState({ contactData });
-      });
+    post("/contact/getUserList", params).then((contactData) => {
+      this.setState({ contactData });
+    });
   }
 
   render() {
