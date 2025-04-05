@@ -11,6 +11,7 @@ import {
   View,
 } from "react-native";
 import { post } from "../utils/AxiosUtil";
+import { getAvatorUrl } from "../utils/StaticUtil";
 
 const { width } = Dimensions.get("window");
 
@@ -54,7 +55,7 @@ export default class ContactsScreen extends Component {
       }
       let icon = require("../../assets/images/avatar.png");
       if (contacts[i].avatar) {
-        icon = `https://licoded.site:9301/api${contacts[i].avatar}`;
+        icon = getAvatorUrl(contacts[i].avatar);
       }
       listData.push({
         key: index++,
