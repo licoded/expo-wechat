@@ -82,14 +82,9 @@ export default class ChattingScreen extends Component {
   }
 
   renderItem = (item) => {
-    console.log('renderItem', item);
-    
     let msgType = item.item.msgType;
-    console.log('msgType', msgType, item.item);
     
     if (msgType == "txt") {
-        console.log('fssfs');
-        
       // 文本消息
       if (item.item.to == this.state.username) {
         return this.renderReceivedTextMsg(item);
@@ -107,8 +102,6 @@ export default class ChattingScreen extends Component {
   };
 
   renderReceivedTextMsg(item) {
-    console.log(item);
-    
     // 接收的文本消息
     let contactAvatar = require("../../assets/images/avatar.png");
     return (
@@ -126,7 +119,6 @@ export default class ChattingScreen extends Component {
   }
 
   renderSendTextMsg(item) {
-    console.log('renderSendTextMsg', item);
     // 发送出去的文本消息
     let avatar = require("../../assets/images/avatar.png");
     // 发送出去的消息
