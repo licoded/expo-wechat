@@ -12,7 +12,8 @@ import {
   ToastAndroid,
 } from "react-native";
 import ChatBottomBar from "../components/ChatBottomBar";
-const {width} = Dimensions.get('window');
+import WebIM from "easemob-websdk";
+const { width } = Dimensions.get("window");
 const MSG_LINE_MAX_COUNT = 15;
 
 const mockMessages = [
@@ -58,12 +59,58 @@ export default class ChattingScreen extends Component {
     super(props);
     this.state = {
       messages: [],
-      username: "curUser",
+      userId: Global.userId,
     };
   }
 
-  UNSAFE_componentWillMount() {
-    this.setState({messages: mockMessages});
+  async IMLogin() {
+    const username = "U2025040597576428365";
+    const password = "licoded";
+    const res = await WebIM.conn
+      .open({ user: username, pwd: password })
+      .catch((e) => {
+        console.log(`Login failed`);
+      });
+    console.log(`Login Success`, res);
+  }
+
+  async UNSAFE_componentWillMount() {
+    await this.IMLogin();
+    this.refreshMsgs();
+  }
+
+  refreshMsgs() {
+    let options = {
+      // 对方的用户 ID 或者群组 ID 或聊天室 ID。
+      targetId: Global.sendToUserId,
+      // 每页期望获取的消息条数。取值范围为 [1,50]，默认值为 20。
+      pageSize: 50,
+      // 查询的起始消息 ID。若该参数设置为 `-1`、`null` 或空字符串，从最新消息开始。
+      cursor: -1,
+      // 会话类型：（默认） `singleChat`：单聊；`groupChat`：群聊；`chatRoom`：聊天室
+      chatType: "singleChat",
+      // 消息搜索方向：（默认）`up`：按服务器收到消息的时间的逆序获取；`down`：按服务器收到消息的时间的正序获取。
+      searchDirection: "down",
+    };
+    console.log("refreshMsgs...");
+
+    const _this = this;
+    WebIM.conn
+      .getHistoryMessages(options)
+      .then((res) => {
+        // 成功获取历史消息。
+        console.log("historyMsgs", res);
+        const messages = res.messages.map(({ type, ...others }) => ({
+          msgType: type,
+          ...others,
+        }));
+        _this.setState({ messages });
+        console.log("setState", messages);
+      })
+      .catch((e) => {
+        // 获取失败。
+        console.log("historyMsgs ERR", e);
+      });
   }
 
   _keyExtractor = (item, index) => index;
@@ -78,9 +125,9 @@ export default class ChattingScreen extends Component {
             keyExtractor={this._keyExtractor}
           />
         </View>
-        <View style={styles.divider}/>
+        <View style={styles.divider} />
         <View style={styles.bottomBar}>
-          <ChatBottomBar updateView={this.updateView} handleSendBtnClick={this.handleSendBtnClick}/>
+          <ChatBottomBar updateView={() => this.refreshMsgs()} />
         </View>
       </View>
     );
@@ -88,10 +135,10 @@ export default class ChattingScreen extends Component {
 
   renderItem = (item) => {
     let msgType = item.item.msgType;
-    
+
     if (msgType == "txt") {
       // 文本消息
-      if (item.item.to == this.state.username) {
+      if (item.item.to == this.state.userId) {
         return this.renderReceivedTextMsg(item);
       } else {
         return this.renderSendTextMsg(item);
@@ -114,9 +161,7 @@ export default class ChattingScreen extends Component {
         <View style={listItemStyle.container}>
           <Image style={listItemStyle.avatar} source={contactAvatar} />
           <View style={listItemStyle.msgContainer}>
-            <Text style={listItemStyle.msgText}>
-              {item.item.data}
-            </Text>
+            <Text style={listItemStyle.msgText}>{item.item.msg}</Text>
           </View>
         </View>
       </View>
@@ -131,9 +176,7 @@ export default class ChattingScreen extends Component {
       <View style={{ flexDirection: "column", alignItems: "center" }}>
         <View style={listItemStyle.containerSend}>
           <View style={listItemStyle.msgContainerSend}>
-            <Text style={listItemStyle.msgText}>
-              {item.item.data}
-            </Text>
+            <Text style={listItemStyle.msgText}>{item.item.msg}</Text>
           </View>
           <Image style={listItemStyle.avatar} source={avatar} />
         </View>
