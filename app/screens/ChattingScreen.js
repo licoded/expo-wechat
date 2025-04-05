@@ -11,6 +11,7 @@ import {
   View,
   ToastAndroid,
 } from "react-native";
+import ChatBottomBar from "../components/ChatBottomBar";
 const {width} = Dimensions.get('window');
 const MSG_LINE_MAX_COUNT = 15;
 
@@ -76,6 +77,10 @@ export default class ChattingScreen extends Component {
             renderItem={this.renderItem}
             keyExtractor={this._keyExtractor}
           />
+        </View>
+        <View style={styles.divider}/>
+        <View style={styles.bottomBar}>
+          <ChatBottomBar updateView={this.updateView} handleSendBtnClick={this.handleSendBtnClick}/>
         </View>
       </View>
     );
