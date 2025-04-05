@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   View,
 } from "react-native";
+import axios from "axios";
 
 const { width } = Dimensions.get("window");
 
@@ -34,8 +35,24 @@ export default class ContactsScreen extends Component {
     };
   }
 
-  componentDidMount() {
-    this.setState({ contactData: mockContactList });
+  UNSAFE_componentWillMount() {
+    const params = { owner_id: Global.userId };
+    axios
+      .post("https://licoded.site:9301/api/contact/getUserList", params)
+      .then((rawResp) => {
+        return rawResp.data;
+      })
+      .then((resp) => {
+        if (resp.code != 200) {
+          throw "get resp, but with ERROR";
+        }
+        const { data } = resp;
+        return data;
+      })
+      .then((contactData) => {
+        console.log(contactData);
+        this.setState({ contactData });
+      });
   }
 
   render() {
@@ -43,18 +60,21 @@ export default class ContactsScreen extends Component {
     var contacts = this.state.contactData;
     var index = 0;
     for (var i = 0; i < contacts.length; i++) {
-      var pinyin = contacts[i].pinyin.toUpperCase();
+      var pinyin = contacts[i].pinyin || contacts[i].user_name;
       var firstLetter = pinyin.substring(0, 1);
       if (firstLetter < "A" || firstLetter > "Z") {
         firstLetter = "#";
       }
       let icon = require("../../assets/images/avatar.png");
+      if (contacts[i].avatar) {
+        icon = `https://licoded.site:9301/api${contacts[i].avatar}`;
+      }
       listData.push({
         key: index++,
         icon: icon,
-        title: contacts[i].name,
-        nick: contacts[i].nick,
-        pinyin: pinyin,
+        title: contacts[i].user_name,
+        nick: contacts[i].user_name,
+        pinyin: pinyin.toUpperCase(),
         firstLetter: firstLetter,
         sectionStart: false,
       });
