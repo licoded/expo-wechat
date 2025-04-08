@@ -1,4 +1,4 @@
-const AVATAR_BASEURL = "https://licoded.site:9301/api";
+const AVATAR_BASEURL = "http://licoded.site:9300";
 
 /**
  *

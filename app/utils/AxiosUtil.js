@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://licoded.site:9301/api";
+axios.defaults.baseURL = "http://licoded.site:9300";
 
 axios.interceptors.response.use(({ data: resp, config }) => {
   const { code, data } = resp;
