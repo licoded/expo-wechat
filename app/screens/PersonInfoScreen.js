@@ -6,10 +6,29 @@ import {
   Text, 
   View
 } from 'react-native';
+import { getAvatorUrl } from '../utils/StaticUtil';
 
 const {width} = Dimensions.get('window');
 
+const userData = {
+  avatarImg: getAvatorUrl('/static/avatars/42663693.png'),
+  nickname: 'licoded',
+  wechatId: 'U2025040881646893574',
+};
+
 export default class PersonInfoScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userData: {},
+    };
+  }
+
+  componentDidMount() {
+    this.setState({ userData });
+  }
+
+
   render() {
     return (
       <View style={styles.container}>
@@ -26,7 +45,7 @@ export default class PersonInfoScreen extends Component {
             <View style={styles.rightContainer}>
               <Image 
                 style={[styles.listItemRight, styles.avatarImg]}
-                source={require('../../assets/images/avatar.png')}
+                source={this.state.userData.avatarImg}
               />
             </View>
           </View>
@@ -35,7 +54,7 @@ export default class PersonInfoScreen extends Component {
           
           {/* 昵称 */}
           <View style={styles.listItem}>
-            <Text style={styles.listItemLeftText}>昵称</Text>
+            <Text style={styles.listItemLeftText}>{this.state.userData.nickname}</Text>
             <View style={styles.rightContainer}>
               <Text>用户昵称</Text>
             </View>
@@ -51,7 +70,7 @@ export default class PersonInfoScreen extends Component {
           <View style={styles.listItem}>
             <Text style={styles.listItemLeftText}>微信号</Text>
             <View style={styles.rightContainer}>
-              <Text>user123</Text>
+              <Text>{this.state.userData.wechatId}</Text>
             </View>
           </View>
           
