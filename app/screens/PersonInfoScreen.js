@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import { getAvatorUrl } from '../utils/StaticUtil';
+import { post } from '../utils/AxiosUtil';
+import Global from '../utils/Global';
 
 const { width } = Dimensions.get('window');
 
@@ -19,7 +21,21 @@ export default class PersonInfoScreen extends Component {
   }
 
   componentDidMount() {
-    this.setState({ userData });
+    // this.setState({ userData });
+    const params = {
+      uuid: Global.userId,
+    };
+    post('/user/getUserInfo', params).then((res) => {
+      console.log(res);
+      const { avatar, nickname, uuid } = res;
+      console.log(nickname);
+      const userData = {
+        avatarImg: getAvatorUrl(avatar),
+        nickname,
+        wechatId: uuid,
+      };
+      this.setState({ userData });
+    });
   }
 
   render() {
