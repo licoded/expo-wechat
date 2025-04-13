@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import { getAvatorUrl } from '../utils/StaticUtil';
 import { post } from '../utils/AxiosUtil';
 import Global from '../utils/Global';
+import { ImagePickerProvider } from '../components/ImagePickerProvider';
 
 const { width } = Dimensions.get('window');
 
@@ -22,6 +30,10 @@ export default class PersonInfoScreen extends Component {
 
   componentDidMount() {
     // this.setState({ userData });
+    this.fetchUserInfo();
+  }
+
+  fetchUserInfo() {
     const params = {
       uuid: Global.userId,
     };
@@ -35,6 +47,20 @@ export default class PersonInfoScreen extends Component {
         wechatId: uuid,
       };
       this.setState({ userData });
+    });
+  }
+
+  updateUserInfo(img) {
+    console.log(img);
+    const baseParams = { uuid: Global.userId };
+    const params = {
+      avatar: `/static/avatars/${img.fileName}`,
+      ...baseParams,
+    };
+    const p = post('/user/updateUserInfo', params);
+    p.then((res) => {
+      console.log(res);
+      this.fetchUserInfo();
     });
   }
 
@@ -52,10 +78,20 @@ export default class PersonInfoScreen extends Component {
           <View style={styles.listItem}>
             <Text style={styles.listItemLeftText}>头像</Text>
             <View style={styles.rightContainer}>
-              <Image
-                style={[styles.listItemRight, styles.avatarImg]}
-                source={this.state.userData.avatarImg}
-              />
+              <ImagePickerProvider
+                allowsEditing={false}
+                uploadUrl="/message/uploadAvatar"
+                beforeUpload={([img]) => this.updateUserInfo(img)}
+              >
+                {({ selectImages }) => (
+                  <TouchableOpacity onPress={selectImages}>
+                    <Image
+                      style={[styles.listItemRight, styles.avatarImg]}
+                      source={this.state.userData.avatarImg}
+                    />
+                  </TouchableOpacity>
+                )}
+              </ImagePickerProvider>
             </View>
           </View>
 
