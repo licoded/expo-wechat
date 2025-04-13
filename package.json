@@ -4,11 +4,20 @@
   "main": "index.js",
   "scripts": {
     "preinstall": "npx only-allow npm",
+    "postinstall": "simple-git-hooks",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "eslint ."
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "npx eslint --fix"
+    ]
   },
   "dependencies": {
     "@backpackapp-io/react-native-toast": "^0.13.0",
@@ -31,7 +40,9 @@
     "eslint-config-expo": "~8.0.1",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-prettier": "^5.2.6",
-    "prettier": "^3.5.3"
+    "lint-staged": "^15.5.1",
+    "prettier": "^3.5.3",
+    "simple-git-hooks": "^2.12.1"
   },
   "private": true
 }
