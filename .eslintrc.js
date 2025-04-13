@@ -4,6 +4,7 @@ module.exports = {
   ignorePatterns: ['/dist/*'],
   plugins: ['prettier'],
   rules: {
+    'no-var': 'error', // 禁止使用 var
     'prettier/prettier': 'error',
   },
 };
