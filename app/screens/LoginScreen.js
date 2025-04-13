@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-const { width } = Dimensions.get("window");
+import React, { Component } from 'react';
 import {
   Dimensions,
   Image,
@@ -8,14 +7,15 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-} from "react-native";
+} from 'react-native';
+const { width } = Dimensions.get('window');
 
 export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      telephone: "19821258634",
-      password: "licoded",
+      telephone: '19821258634',
+      password: 'licoded',
     };
   }
 
@@ -25,14 +25,14 @@ export default class LoginScreen extends Component {
       nickname: telephone,
       telephone,
       password,
-      sms_code: "",
+      sms_code: '',
     };
-    console.log("login params", params);
+    console.log('login params', params);
 
-    fetch("http://licoded.site:9300/login", {
-      method: "POST",
+    fetch('http://licoded.site:9300/login', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(params),
     })
@@ -48,7 +48,7 @@ export default class LoginScreen extends Component {
         <View style={styles.content}>
           <View style={styles.pwdView}>
             <Image
-              source={require("../../assets/images/ic_launcher.png")}
+              source={require('../../assets/images/ic_launcher.png')}
               style={{ width: 100, height: 100, marginBottom: 50 }}
             />
             <View style={styles.pwdContainer}>
@@ -82,7 +82,7 @@ export default class LoginScreen extends Component {
                 onPress={() => this.login()}
               >
                 <View style={styles.loginBtn}>
-                  <Text style={{ color: "#FFFFFF", fontSize: 16 }}>登录</Text>
+                  <Text style={{ color: '#FFFFFF', fontSize: 16 }}>登录</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -96,16 +96,16 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
+    flexDirection: 'column',
   },
   content: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   pwdView: {
-    flexDirection: "column",
-    alignItems: "center",
+    flexDirection: 'column',
+    alignItems: 'center',
     marginTop: 50,
   },
   textInput: {
@@ -114,12 +114,12 @@ const styles = StyleSheet.create({
   usernameText: {
     marginTop: 10,
     fontSize: 16,
-    textAlign: "center",
+    textAlign: 'center',
   },
   pwdContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     height: 50,
-    alignItems: "center",
+    alignItems: 'center',
     marginLeft: 40,
     marginRight: 40,
   },
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     height: 1,
-    backgroundColor: "#00BC0C",
+    backgroundColor: '#00BC0C',
   },
   loginBtn: {
     width: width - 40,
@@ -137,14 +137,14 @@ const styles = StyleSheet.create({
     marginTop: 50,
     height: 50,
     borderRadius: 3,
-    backgroundColor: "#00BC0C",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#00BC0C',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   changeAccount: {
     fontSize: 16,
-    color: "#00BC0C",
-    textAlign: "center",
+    color: '#00BC0C',
+    textAlign: 'center',
     marginBottom: 20,
   },
 });

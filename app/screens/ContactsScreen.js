@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import Global from "../utils/Global";
+import React, { Component } from 'react';
+import Global from '../utils/Global';
 import {
   Dimensions,
   FlatList,
@@ -9,22 +9,22 @@ import {
   Text,
   TouchableHighlight,
   View,
-} from "react-native";
-import { post } from "../utils/AxiosUtil";
-import { getAvatorUrl } from "../utils/StaticUtil";
+} from 'react-native';
+import { post } from '../utils/AxiosUtil';
+import { getAvatorUrl } from '../utils/StaticUtil';
 
-const { width } = Dimensions.get("window");
+const { width } = Dimensions.get('window');
 
 const mockContactList = [
   {
-    pinyin: "LiSi",
-    name: "李四",
-    nick: "李四",
+    pinyin: 'LiSi',
+    name: '李四',
+    nick: '李四',
   },
   {
-    pinyin: "LiSi",
-    name: "张三",
-    nick: "张三",
+    pinyin: 'LiSi',
+    name: '张三',
+    nick: '张三',
   },
 ];
 
@@ -38,22 +38,22 @@ export default class ContactsScreen extends Component {
 
   UNSAFE_componentWillMount() {
     const params = { owner_id: Global.userId };
-    post("/contact/getUserList", params).then((contactData) => {
+    post('/contact/getUserList', params).then((contactData) => {
       this.setState({ contactData });
     });
   }
 
   render() {
-    var listData = [];
-    var contacts = this.state.contactData;
-    var index = 0;
-    for (var i = 0; i < contacts.length; i++) {
-      var pinyin = contacts[i].pinyin || contacts[i].user_name;
-      var firstLetter = pinyin.substring(0, 1);
-      if (firstLetter < "A" || firstLetter > "Z") {
-        firstLetter = "#";
+    let listData = [];
+    let contacts = this.state.contactData;
+    let index = 0;
+    for (let i = 0; i < contacts.length; i++) {
+      let pinyin = contacts[i].pinyin || contacts[i].user_name;
+      let firstLetter = pinyin.substring(0, 1);
+      if (firstLetter < 'A' || firstLetter > 'Z') {
+        firstLetter = '#';
       }
-      let icon = require("../../assets/images/avatar.png");
+      let icon = require('../../assets/images/avatar.png');
       if (contacts[i].avatar) {
         icon = getAvatorUrl(contacts[i].avatar);
       }
@@ -81,13 +81,13 @@ export default class ContactsScreen extends Component {
       return 0;
     });
     // 根据首字母分区
-    for (var i = 0; i < listData.length; i++) {
-      var obj = listData[i];
+    for (let i = 0; i < listData.length; i++) {
+      let obj = listData[i];
       if (obj.pinyin === undefined) {
         continue;
       }
       if (i > 0 && i < listData.length) {
-        var preObj = listData[i - 1];
+        let preObj = listData[i - 1];
         if (preObj.pinyin === undefined && obj.pinyin !== undefined) {
           obj.sectionStart = true;
         } else if (
@@ -127,16 +127,16 @@ export default class ContactsScreen extends Component {
   };
 
   onListItemClick(item) {
-    console.log("TODO: 跳转到聊天页");
+    console.log('TODO: 跳转到聊天页');
   }
 
   _renderItem = (item) => {
-    var section = [];
+    let section = [];
     if (item.item.sectionStart) {
       section.push(
-        <Text key={"section" + item.item.key} style={listItemStyle.sectionView}>
+        <Text key={'section' + item.item.key} style={listItemStyle.sectionView}>
           {item.item.firstLetter}
-        </Text>
+        </Text>,
       );
     }
     return (
@@ -148,11 +148,11 @@ export default class ContactsScreen extends Component {
             this.onListItemClick(item);
           }}
         >
-          <View style={listItemStyle.container} key={"item" + item.item.key}>
+          <View style={listItemStyle.container} key={'item' + item.item.key}>
             <Image style={listItemStyle.image} source={item.item.icon} />
             <Text style={listItemStyle.itemText}>{item.item.title}</Text>
             <Text style={listItemStyle.subText}>
-              {item.item.nick ? "" : "(" + item.item.nick + ")"}
+              {item.item.nick ? '' : '(' + item.item.nick + ')'}
             </Text>
           </View>
         </TouchableHighlight>
@@ -171,9 +171,9 @@ export default class ContactsScreen extends Component {
 const listItemStyle = StyleSheet.create({
   container: {
     width: width,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#FFFFFF",
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
   },
   image: {
     marginLeft: 15,
@@ -185,39 +185,39 @@ const listItemStyle = StyleSheet.create({
   },
   itemText: {
     fontSize: 15,
-    color: "#000000",
+    color: '#000000',
   },
   subText: {
     fontSize: 15,
-    color: "#999999",
+    color: '#999999',
   },
   sectionView: {
     width: width,
-    backgroundColor: "rgba(0, 0, 0, 0)",
+    backgroundColor: 'rgba(0, 0, 0, 0)',
     paddingLeft: 10,
     paddingRight: 10,
     paddingTop: 2,
     paddingBottom: 2,
-    color: "#999999",
+    color: '#999999',
   },
 });
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   divider: {
     width: width,
     height: 1 / PixelRatio.get(),
-    backgroundColor: "#D3D3D3",
+    backgroundColor: '#D3D3D3',
   },
   content: {
     flex: 1,
     width: width,
-    flexDirection: "row",
+    flexDirection: 'row',
     backgroundColor: Global.pageBackgroundColor,
   },
   tabBarIcon: {

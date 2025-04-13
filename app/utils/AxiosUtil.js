@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-axios.defaults.baseURL = "http://licoded.site:9300";
+axios.defaults.baseURL = 'http://licoded.site:9300';
 
 axios.interceptors.response.use(({ data: resp, config }) => {
   const { code, data } = resp;
@@ -24,7 +24,7 @@ export function get(url, params) {
   return Promise.resolve(
     axios.get(url, {
       params: params,
-    })
+    }),
   );
 }
 

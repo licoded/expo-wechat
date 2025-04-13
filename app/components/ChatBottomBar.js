@@ -1,21 +1,21 @@
-import React, { Component } from "react";
-import { Button, PixelRatio, StyleSheet, TextInput, View } from "react-native";
-import WebIM from "easemob-websdk";
-import Global from "../utils/Global";
+import React, { Component } from 'react';
+import { Button, PixelRatio, StyleSheet, TextInput, View } from 'react-native';
+import WebIM from 'easemob-websdk';
+import Global from '../utils/Global';
 
 export default class ChatBottomBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputMsg: "",
+      inputMsg: '',
     };
   }
   sendMsg() {
     const peerId = Global.sendToUserId;
     const peerMessage = this.state.inputMsg;
     let option = {
-      chatType: "singleChat", // 会话类型，设置为单聊。
-      type: "txt", // 消息类型。
+      chatType: 'singleChat', // 会话类型，设置为单聊。
+      type: 'txt', // 消息类型。
       to: peerId, // 消息接收方（用户 ID)。
       msg: peerMessage, // 消息内容。
     };
@@ -23,13 +23,13 @@ export default class ChatBottomBar extends Component {
     WebIM.conn
       .send(msg)
       .then((res) => {
-        this.state.inputMsg = "";
-        console.log("send private text success", res);
-        console.log("Message send to: " + peerId + " Message: " + peerMessage);
+        this.setState({ inputMsg: '' });
+        console.log('send private text success', res);
+        console.log('Message send to: ' + peerId + ' Message: ' + peerMessage);
         this.props.updateView();
       })
       .catch(() => {
-        console.log("send private text fail");
+        console.log('send private text fail');
       });
   }
   render() {
@@ -45,8 +45,8 @@ export default class ChatBottomBar extends Component {
         />
         <View style={{ marginLeft: 10 }}>
           <Button
-            color={"#49BC1C"}
-            title={"发送"}
+            color={'#49BC1C'}
+            title={'发送'}
             onPress={() => this.sendMsg()}
           />
         </View>
@@ -58,10 +58,10 @@ export default class ChatBottomBar extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
     height: 50,
-    alignItems: "center",
-    backgroundColor: "#F4F4F4",
+    alignItems: 'center',
+    backgroundColor: '#F4F4F4',
     paddingLeft: 10,
     paddingRight: 10,
   },
@@ -80,9 +80,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     borderWidth: 1 / PixelRatio.get(),
-    borderColor: "#6E7377",
+    borderColor: '#6E7377',
     borderRadius: 5,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
