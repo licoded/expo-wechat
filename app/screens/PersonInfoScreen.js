@@ -9,24 +9,43 @@ import {
 
 const {width} = Dimensions.get('window');
 
+const userData = {
+  avatarImg:require('../../assets/images/avatar.png'),
+  nickname:'weiyang',
+  wechatId:'123456'
+}
+
 export default class PersonInfoScreen extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      userData: {},
+    };
+  }
+
+  componentDidMount() {
+    this.setState({userData})
+  }
+
+
   render() {
     return (
       <View style={styles.container}>
-        {/* 静态标题栏 */}
-        <View style={styles.titleBar}>
-          <Text style={styles.titleText}>个人信息</Text>
-        </View>
+          {/* 静态标题栏 */}
+          <View style={styles.titleBar}>
+            <Text style={styles.titleText}>个人信息</Text>
+          </View>
 
-        {/* 静态内容列表 */}
-        <View style={styles.list}>
+          {/* 静态内容列表 */}
+          <View style={styles.list}>
           {/* 头像 */}
           <View style={styles.listItem}>
             <Text style={styles.listItemLeftText}>头像</Text>
             <View style={styles.rightContainer}>
               <Image 
-                style={[styles.listItemRight, styles.avatarImg]}
-                source={require('../../assets/images/avatar.png')}
+                style={[styles.listItemRight, styles.avatarImg]}        
+                // source={require('../../assets/images/avatar.png')}
+                source={this.state.userData.avatarImg}
               />
             </View>
           </View>
@@ -37,7 +56,7 @@ export default class PersonInfoScreen extends Component {
           <View style={styles.listItem}>
             <Text style={styles.listItemLeftText}>昵称</Text>
             <View style={styles.rightContainer}>
-              <Text>用户昵称</Text>
+              <Text>{this.state.userData.nickname}</Text>
             </View>
             <Image 
               source={require('../../assets/images/ic_right_arrow.png')} 
@@ -51,7 +70,7 @@ export default class PersonInfoScreen extends Component {
           <View style={styles.listItem}>
             <Text style={styles.listItemLeftText}>微信号</Text>
             <View style={styles.rightContainer}>
-              <Text>user123</Text>
+              <Text>{this.state.userData.wechatId}</Text>
             </View>
           </View>
           
@@ -92,7 +111,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#f5f5f5'
+    // backgroundColor: '#f5f5f5'
   },
   titleBar: {
     height: 50,
