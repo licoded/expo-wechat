@@ -60,6 +60,15 @@ export default class PersonInfoScreen extends Component {
     });
   }
 
+  _renderRightArrow() {
+    return (
+      <Image
+        source={require('../../assets/images/ic_right_arrow.png')}
+        style={styles.rightArrow}
+      />
+    );
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -89,22 +98,18 @@ export default class PersonInfoScreen extends Component {
                 )}
               </ImagePickerProvider>
             </View>
+            {this._renderRightArrow()}
           </View>
 
           <View style={styles.divider} />
 
           {/* 昵称 */}
           <View style={styles.listItem}>
-            <Text style={styles.listItemLeftText}>
-              {this.state.userData.nickname}
-            </Text>
+            <Text style={styles.listItemLeftText}>用户昵称</Text>
             <View style={styles.rightContainer}>
-              <Text>用户昵称</Text>
+              <Text>{this.state.userData.nickname}</Text>
             </View>
-            <Image
-              source={require('../../assets/images/ic_right_arrow.png')}
-              style={styles.rightArrow}
-            />
+            {this._renderRightArrow()}
           </View>
 
           <View style={styles.divider} />
@@ -115,34 +120,7 @@ export default class PersonInfoScreen extends Component {
             <View style={styles.rightContainer}>
               <Text>{this.state.userData.wechatId}</Text>
             </View>
-          </View>
-
-          <View style={styles.divider} />
-
-          {/* 二维码名片 */}
-          <View style={styles.listItem}>
-            <Text style={styles.listItemLeftText}>二维码名片</Text>
-            <View style={styles.rightContainer}>
-              <Image
-                style={[styles.listItemRight, styles.qrcodeImg]}
-                source={require('../../assets/images/ic_qr_code.png')}
-              />
-            </View>
-          </View>
-
-          <View style={styles.divider} />
-
-          {/* 更多 */}
-          <View style={styles.listItem}>
-            <Text style={styles.listItemLeftText}>更多</Text>
-          </View>
-
-          {/* 间距 */}
-          <View style={{ height: 20, width: width }} />
-
-          {/* 我的地址 */}
-          <View style={styles.listItem}>
-            <Text style={styles.listItemLeftText}>我的地址</Text>
+            {this._renderRightArrow()}
           </View>
         </View>
       </View>
