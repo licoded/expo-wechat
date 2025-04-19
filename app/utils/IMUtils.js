@@ -1,5 +1,17 @@
 import WebIM from 'easemob-websdk';
 
+const IMErrMap = {
+  'user not found': '找不到该用户!',
+  'The user has logged in.': '重复登录!',
+};
+const IMErrHandler = (err) => {
+  console.log(err);
+  let processed_err = err;
+  processed_err.message = IMErrMap[err.message] || processed_err.message;
+  processed_err.message = 'IM: ' + processed_err.message;
+  return Promise.reject(processed_err);
+};
+
 export function InitIM() {
   WebIM.logger.setConsoleLogVisibility(false);
 
@@ -26,4 +38,14 @@ export function InitIM() {
       console.log('on error', error);
     },
   });
+}
+
+export function IMLogin(username, password) {
+  return WebIM.conn.open({ user: username, pwd: password }).catch(IMErrHandler);
+}
+
+export function IMRegister(username, password) {
+  return WebIM.conn
+    .registerUser({ user: username, pwd: password })
+    .catch(IMErrHandler);
 }

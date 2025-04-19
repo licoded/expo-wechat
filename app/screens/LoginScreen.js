@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Toast } from 'toastify-react-native';
 import { post } from '../utils/AxiosUtil';
+import { IMLogin } from '../utils/IMUtils';
 const { width } = Dimensions.get('window');
 
 export default class LoginScreen extends Component {
@@ -34,8 +35,15 @@ export default class LoginScreen extends Component {
     console.log('login params', params);
 
     post('/login', params)
-      .then(() => {
-        Toast.success('登录成功!');
+      .then((userData) => {
+        const { uuid } = userData;
+        IMLogin(uuid, password)
+          .then(() => {
+            Toast.success('登录成功!');
+          })
+          .catch((resp) => {
+            Toast.error(resp.message);
+          });
       })
       .catch((resp) => {
         Toast.error(resp.message);
