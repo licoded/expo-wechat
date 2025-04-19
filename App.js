@@ -1,3 +1,5 @@
+import ToastManager from 'toastify-react-native';
+
 import LoginScreen from './app/screens/LoginScreen';
 import ContactsScreen from './app/screens/ContactsScreen';
 import ChattingScreen from './app/screens/ChattingScreen';
@@ -7,4 +9,13 @@ import { InitIM } from './app/utils/IMUtils';
 
 InitIM();
 
-export default PersonInfoScreen;
+function App() {
+  return (
+    <>
+      <LoginScreen />
+      <ToastManager showCloseIcon={false} showProgressBar={false} />
+    </>
+  );
+}
+
+export default App;

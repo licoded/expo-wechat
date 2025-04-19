@@ -8,14 +8,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Toast } from 'toastify-react-native';
 const { width } = Dimensions.get('window');
 
 export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      telephone: '19821258634',
-      password: 'licoded',
+      // telephone: '19821258634',
+      // password: 'licoded',
+      telephone: '17189540780',
+      password: 'Fu7',
     };
   }
 
@@ -38,6 +41,11 @@ export default class LoginScreen extends Component {
     })
       .then((res) => res.json())
       .then((res) => {
+        Toast.show({
+          type: res.code == 200 ? 'success' : 'error',
+          position: 'bottom',
+          text1: res.message,
+        });
         console.log(res);
       });
   }
