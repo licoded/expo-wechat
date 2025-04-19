@@ -11,6 +11,7 @@ import {
 import { Toast } from 'toastify-react-native';
 import { post } from '../utils/AxiosUtil';
 import { IMLogin } from '../utils/IMUtils';
+import { LocalStorage } from '../utils/Storage';
 const { width } = Dimensions.get('window');
 
 export default class LoginScreen extends Component {
@@ -36,6 +37,7 @@ export default class LoginScreen extends Component {
 
     post('/login', params)
       .then((userData) => {
+        LocalStorage.set('userData', userData);
         const { uuid } = userData;
         IMLogin(uuid, password)
           .then(() => {
