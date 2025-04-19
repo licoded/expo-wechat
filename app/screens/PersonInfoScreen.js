@@ -11,6 +11,7 @@ import { getAvatorUrl } from '../utils/StaticUtil';
 import { post } from '../utils/AxiosUtil';
 import Global from '../utils/Global';
 import { ImagePickerProvider } from '../components/ImagePickerProvider';
+import { LocalStorage } from '../utils/Storage';
 
 const { width } = Dimensions.get('window');
 
@@ -34,13 +35,8 @@ export default class PersonInfoScreen extends Component {
   }
 
   fetchUserInfo() {
-    const params = {
-      uuid: Global.userId,
-    };
-    post('/user/getUserInfo', params).then((res) => {
-      console.log(res);
-      const { avatar, nickname, uuid } = res;
-      console.log(nickname);
+    LocalStorage.get('userData').then((raw_userData) => {
+      const { avatar, nickname, uuid } = raw_userData;
       const userData = {
         avatarImg: getAvatorUrl(avatar),
         nickname,

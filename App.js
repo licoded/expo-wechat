@@ -12,7 +12,7 @@ InitIM();
 function App() {
   return (
     <>
-      <LoginScreen />
+      <PersonInfoScreen />
       <ToastManager
         showCloseIcon={false}
         showProgressBar={false}
