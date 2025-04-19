@@ -13,7 +13,11 @@ function App() {
   return (
     <>
       <LoginScreen />
-      <ToastManager showCloseIcon={false} showProgressBar={false} />
+      <ToastManager
+        showCloseIcon={false}
+        showProgressBar={false}
+        position={'bottom'}
+      />
     </>
   );
 }

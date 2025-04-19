@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import { Toast } from 'toastify-react-native';
+import { post } from '../utils/AxiosUtil';
 const { width } = Dimensions.get('window');
 
 export default class LoginScreen extends Component {
@@ -32,21 +33,12 @@ export default class LoginScreen extends Component {
     };
     console.log('login params', params);
 
-    fetch('http://licoded.site:9300/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(params),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        Toast.show({
-          type: res.code == 200 ? 'success' : 'error',
-          position: 'bottom',
-          text1: res.message,
-        });
-        console.log(res);
+    post('/login', params)
+      .then(() => {
+        Toast.success('登录成功!');
+      })
+      .catch((resp) => {
+        Toast.error(resp.message);
       });
   }
 
