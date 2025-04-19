@@ -1,3 +1,6 @@
+import { createStaticNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { navigationRef } from './RootNavigation';
 import ToastManager from 'toastify-react-native';
 
 import LoginScreen from './app/screens/LoginScreen';
@@ -9,10 +12,22 @@ import { InitIM } from './app/utils/IMUtils';
 
 InitIM();
 
+const MyStack = createStackNavigator({
+  screens: {
+    Login: LoginScreen,
+    PersonInfo: PersonInfoScreen,
+    Chat: ChattingScreen,
+  },
+  screenOptions: {
+    headerShown: false,
+  },
+});
+const MyNavigation = createStaticNavigation(MyStack);
+
 function App() {
   return (
     <>
-      <PersonInfoScreen />
+      <MyNavigation ref={navigationRef} />
       <ToastManager
         showCloseIcon={false}
         showProgressBar={false}

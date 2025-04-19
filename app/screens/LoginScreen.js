@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { navigationRef } from '../../RootNavigation';
 import { Toast } from 'toastify-react-native';
 import { post } from '../utils/AxiosUtil';
 import { IMLogin } from '../utils/IMUtils';
@@ -42,6 +43,7 @@ export default class LoginScreen extends Component {
         IMLogin(uuid, password)
           .then(() => {
             Toast.success('登录成功!');
+            navigationRef.navigate('PersonInfo');
           })
           .catch((resp) => {
             Toast.error(resp.message);
