@@ -43,7 +43,7 @@ export default class LoginScreen extends Component {
         IMLogin(uuid, password)
           .then(() => {
             Toast.success('登录成功!');
-            navigationRef.navigate('PersonInfo');
+            navigationRef.navigate('Home');
           })
           .catch((resp) => {
             Toast.error(resp.message);
