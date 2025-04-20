@@ -149,7 +149,10 @@ export default class ContactsScreen extends Component {
           }}
         >
           <View style={listItemStyle.container} key={'item' + item.item.key}>
-            <Image style={listItemStyle.image} source={item.item.icon} />
+            <Image
+              style={listItemStyle.image}
+              source={{ uri: item.item.icon }}
+            />
             <Text style={listItemStyle.itemText}>{item.item.title}</Text>
             <Text style={listItemStyle.subText}>
               {item.item.nick ? '' : '(' + item.item.nick + ')'}

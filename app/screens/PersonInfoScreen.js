@@ -92,7 +92,7 @@ export default class PersonInfoScreen extends Component {
                   <TouchableOpacity onPress={selectImages}>
                     <Image
                       style={[styles.listItemRight, styles.avatarImg]}
-                      source={this.state.userData.avatarImg}
+                      source={{ uri: this.state.userData.avatarImg }}
                     />
                   </TouchableOpacity>
                 )}
