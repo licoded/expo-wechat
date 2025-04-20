@@ -8,9 +8,7 @@ import ContactsScreen from './app/screens/ContactsScreen';
 import ChattingScreen from './app/screens/ChattingScreen';
 import PersonInfoScreen from './app/screens/PersonInfoScreen';
 
-import { InitIM } from './app/utils/IMUtils';
-
-InitIM();
+import { useIM } from './app/utils/IMUtils';
 
 const MyStack = createStackNavigator({
   screens: {
@@ -25,6 +23,7 @@ const MyStack = createStackNavigator({
 const MyNavigation = createStaticNavigation(MyStack);
 
 function App() {
+  useIM();
   return (
     <>
       <MyNavigation ref={navigationRef} />

@@ -12,7 +12,7 @@ const IMErrHandler = (err) => {
   return Promise.reject(processed_err);
 };
 
-export function InitIM() {
+export function useIM() {
   WebIM.logger.setConsoleLogVisibility(false);
 
   const appKey = '1182250405193982#demo';
