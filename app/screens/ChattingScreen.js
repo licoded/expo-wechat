@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import ChatBottomBar from '../components/ChatBottomBar';
 import WebIM from 'easemob-websdk';
+import { navigationRef } from '../../RootNavigation';
 const { width } = Dimensions.get('window');
 
 const mockMessages = [
@@ -61,26 +62,19 @@ export default class ChattingScreen extends Component {
     };
   }
 
-  async IMLogin() {
-    const username = 'U2025040597576428365';
-    const password = 'licoded';
-    const res = await WebIM.conn
-      .open({ user: username, pwd: password })
-      .catch((e) => {
-        console.log(`Login failed`);
-      });
-    console.log(`Login Success`, res);
-  }
-
   async UNSAFE_componentWillMount() {
-    await this.IMLogin();
+    const { title } = this.props.route.params;
+    navigationRef.setParams({
+      title,
+    });
     this.refreshMsgs();
   }
 
   refreshMsgs() {
+    const { userId } = this.props.route.params;
     let options = {
       // 对方的用户 ID 或者群组 ID 或聊天室 ID。
-      targetId: Global.sendToUserId,
+      targetId: userId,
       // 每页期望获取的消息条数。取值范围为 [1,50]，默认值为 20。
       pageSize: 50,
       // 查询的起始消息 ID。若该参数设置为 `-1`、`null` 或空字符串，从最新消息开始。

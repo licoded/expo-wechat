@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { post } from '../utils/AxiosUtil';
 import { getAvatorUrl } from '../utils/StaticUtil';
+import { navigationRef } from '../../RootNavigation';
 
 const { width } = Dimensions.get('window');
 
@@ -60,6 +61,7 @@ export default class ContactsScreen extends Component {
       listData.push({
         key: index++,
         icon: icon,
+        userId: contacts[i].user_id,
         title: contacts[i].user_name,
         nick: contacts[i].user_name,
         pinyin: pinyin.toUpperCase(),
@@ -127,7 +129,7 @@ export default class ContactsScreen extends Component {
   };
 
   onListItemClick(item) {
-    console.log('TODO: 跳转到聊天页');
+    navigationRef.navigate('Chat', item.item);
   }
 
   _renderItem = (item) => {
